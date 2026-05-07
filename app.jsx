@@ -29,6 +29,8 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [formState, setFormState] = useState({ nome: "", email: "", mensagem: "", sent: false });
+  const [waOpen, setWaOpen] = useState(false);
+  const [waName, setWaName] = useState("");
 
   const dark = t.palette[0];
   const mid = t.palette[1];
@@ -147,7 +149,7 @@ function App() {
                 <div className="hero__photo-tag-dot"></div>
                 <div>
                   <div className="hero__photo-tag-label">Disponível esta semana</div>
-                  <div className="hero__photo-tag-sub">Horários terça a sábado</div>
+                  <div className="hero__photo-tag-sub">Horários segunda a sexta</div>
                 </div>
               </div>
             </div>
@@ -209,12 +211,12 @@ function App() {
                 <div className="sobre__cred-val">Psicologia Clínica</div>
               </div>
               <div className="sobre__cred">
-                <div className="sobre__cred-key">Abordagem</div>
-                <div className="sobre__cred-val">Psicodinâmica integrativa</div>
-              </div>
-              <div className="sobre__cred">
                 <div className="sobre__cred-key">Atende</div>
                 <div className="sobre__cred-val">Adultos · Idosos</div>
+              </div>
+              <div className="sobre__cred">
+                <div className="sobre__cred-key">Horários</div>
+                <div className="sobre__cred-val">Segunda a sexta</div>
               </div>
             </div>
           </div>
@@ -270,9 +272,9 @@ function App() {
 
           <div className="como__steps">
             {[
-              { n: "01", t: "Primeiro contato", d: "Você me escreve por e-mail ou WhatsApp. Combinamos um horário para uma conversa inicial, sem compromisso." },
-              { n: "02", t: "Sessão experimental", d: "30 minutos por videochamada para nos conhecermos, entender o que te trouxe aqui, e ver se faz sentido seguirmos juntas." },
-              { n: "03", t: "Acompanhamento", d: "Sessões semanais de 50 minutos, em dia e horário fixos, por uma plataforma de vídeo segura. Sigilo absoluto." },
+              { n: "01", t: "Primeiro contato", d: "Entre em contato comigo por WhatsApp. Combinamos um horário para uma conversa inicial, sem compromisso." },
+              { n: "02", t: "Duração da sessão", d: "As sessões podem ser de 30 ou 50 minutos, conforme o que faz mais sentido pra você." },
+              { n: "03", t: "Acompanhamento", d: "Frequência escolhida pelo paciente, em dia e horário fixos, por uma plataforma de vídeo segura. Sigilo absoluto." },
             ].map((s) => (
               <div className="como__step" key={s.n}>
                 <div className="como__step-num">{s.n}</div>
@@ -330,8 +332,7 @@ function App() {
               { q: "Atendimento online funciona mesmo?", a: "Sim. A pesquisa em psicologia clínica mostra que a terapia por videochamada tem eficácia comparável ao atendimento presencial, desde que feita por profissional qualificado e em ambiente adequado dos dois lados." },
               { q: "E se eu não souber muito de tecnologia?", a: "Tudo é simples — basta um celular, tablet ou computador com câmera, e uma conexão estável. No primeiro contato eu te explico o passo a passo, sem pressa." },
               { q: "Quanto tempo dura a terapia?", a: "Não existe uma resposta única. Algumas pessoas vêm para um momento específico, outras seguem por anos. Conversamos sobre isso ao longo do processo, sem nenhum compromisso de continuidade que não faça sentido pra você." },
-              { q: "Atende pelo plano de saúde?", a: "O atendimento é particular. Forneço recibo psicológico para reembolso em planos de saúde que cubram terapia, e para dedução no Imposto de Renda." },
-              { q: "Como é o primeiro contato?", a: "Me escreve um e-mail breve contando o que te trouxe aqui — pode ser uma frase só. Eu respondo em até 48h com horários disponíveis para uma conversa inicial." },
+              { q: "Atende pelo plano de saúde?", a: "O atendimento é particular." },
             ].map((f, i) => (
               <button
                 className={`faq__item ${openFaq === i ? "faq__item--open" : ""}`}
@@ -389,7 +390,7 @@ function App() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                 <div>
                   <span className="contato__channel-key">Atendimento</span>
-                  <span className="contato__channel-val">Terça a sábado · sob agenda</span>
+                  <span className="contato__channel-val">Segunda a sexta · sob agenda</span>
                 </div>
               </div>
             </div>
@@ -432,9 +433,6 @@ function App() {
                   Enviar mensagem
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </button>
-                <p className="contato__form-note">
-                  Ao enviar, abriremos seu cliente de e-mail com a mensagem pronta.
-                </p>
               </form>
             ) : (
               <div className="contato__sent">
@@ -456,7 +454,7 @@ function App() {
             <img src="logo-andrea.png" alt="Andrea do Val" className="footer__brand-logo" />
           </div>
           <div className="footer__copy">
-            © 2025 Psicóloga Andrea do Val — Atendimento online.<br/>
+            © 2026 Psicóloga Andrea do Val — Atendimento online.<br/>
             Todos os direitos reservados.
           </div>
         </div>
@@ -464,18 +462,66 @@ function App() {
 
       {/* WHATSAPP FLOAT */}
       {t.showWhatsapp && (
-        <a
+        <button
           className="wa-float"
-          href={`https://wa.me/${t.whatsappNumber}?text=${encodeURIComponent(t.whatsappMessage)}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => setWaOpen(true)}
           aria-label="Conversar pelo WhatsApp"
           title="Conversar pelo WhatsApp"
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
           </svg>
-        </a>
+        </button>
+      )}
+
+      {/* WHATSAPP PROMPT MODAL */}
+      {waOpen && (
+        <div className="wa-modal" onClick={() => setWaOpen(false)}>
+          <div className="wa-modal__panel" onClick={(e) => e.stopPropagation()}>
+            <button className="wa-modal__close" onClick={() => setWaOpen(false)} aria-label="Fechar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+            <div className="wa-modal__icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+              </svg>
+            </div>
+            <h3 className="wa-modal__title">Vamos conversar pelo WhatsApp</h3>
+            <p className="wa-modal__lead">Como posso te chamar? Preparo uma mensagem inicial pra você.</p>
+            <form
+              className="wa-modal__form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const nome = waName.trim();
+                if (!nome) return;
+                const msg = `Olá Andrea, meu nome é ${nome}. Vim pelo seu site e gostaria de agendar uma conversa.`;
+                const url = `https://wa.me/${t.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+                window.open(url, "_blank", "noopener,noreferrer");
+                setWaOpen(false);
+                setWaName("");
+              }}
+            >
+              <input
+                className="wa-modal__input"
+                type="text"
+                placeholder="Seu nome"
+                value={waName}
+                onChange={(e) => setWaName(e.target.value)}
+                autoFocus
+                required
+              />
+              <button type="submit" className="wa-modal__submit" disabled={!waName.trim()}>
+                Abrir WhatsApp
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </form>
+            <p className="wa-modal__note">Você será direcionado(a) ao WhatsApp com uma mensagem pronta.</p>
+          </div>
+        </div>
       )}
 
       {/* TWEAKS */}

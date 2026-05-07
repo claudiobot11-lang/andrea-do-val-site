@@ -811,6 +811,8 @@ a.contato__channel:hover { padding-left: 8px; }
   box-shadow: 0 12px 28px -6px rgba(37, 211, 102, 0.5);
   z-index: 50;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
   transition: transform .2s;
   animation: wa-bob 2.4s ease-in-out infinite;
 }
@@ -818,6 +820,131 @@ a.contato__channel:hover { padding-left: 8px; }
 @keyframes wa-bob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
+}
+
+/* WHATSAPP MODAL */
+.wa-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 25, 20, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: wa-fade .2s ease;
+}
+@keyframes wa-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.wa-modal__panel {
+  background: var(--c-light);
+  border-radius: 14px;
+  padding: 40px 32px 32px;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 24px 60px -12px rgba(0,0,0,0.3);
+  animation: wa-pop .25s ease;
+  text-align: center;
+}
+@keyframes wa-pop {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.wa-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #6b736b;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: background .2s, color .2s;
+}
+.wa-modal__close:hover { background: rgba(0,0,0,0.06); color: var(--c-dark); }
+.wa-modal__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px -6px rgba(37, 211, 102, 0.4);
+}
+.wa-modal__title {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--c-dark);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.wa-modal__lead {
+  font-size: 15px;
+  color: #4a534a;
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+.wa-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.wa-modal__input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 10px;
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: #1a1f1a;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.wa-modal__input:focus {
+  border-color: var(--c-dark);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-dark) 12%, transparent);
+}
+.wa-modal__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 22px;
+  background: #25d366;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .2s, opacity .2s;
+}
+.wa-modal__submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -8px rgba(37, 211, 102, 0.6);
+}
+.wa-modal__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.wa-modal__note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #6b736b;
+  line-height: 1.5;
 }
 
 /* ───── RESPONSIVE ───── */
@@ -829,11 +956,24 @@ a.contato__channel:hover { padding-left: 8px; }
   .hero { padding-top: 110px; }
   .hero__grid {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 32px;
     padding-bottom: 40px;
   }
-  .hero__visual { max-width: 360px; margin: 0 auto; justify-self: center; }
-  .hero__photo-tag { left: -16px; }
+  .hero__copy {
+    display: contents;
+  }
+  .hero__visual {
+    order: -2;
+    max-width: 280px;
+    margin: 0 auto;
+    justify-self: center;
+  }
+  .hero__title { order: -1; }
+  .hero__eyebrow { order: 0; margin-bottom: 0; }
+  .hero__lead { order: 1; margin-bottom: 0; }
+  .hero__ctas { order: 2; margin-bottom: 0; }
+  .hero__trust { order: 3; }
+  .hero__photo-tag { left: -16px; bottom: 24px; }
   .hero__photo-logo { right: -8px; top: -24px; padding: 14px 18px; }
   .hero__photo-logo img { height: 56px; }
   .nav__brand-logo { height: 48px; }
@@ -867,9 +1007,14 @@ a.contato__channel:hover { padding-left: 8px; }
 
 @media (max-width: 560px) {
   .container, .nav__inner { padding: 0 20px; }
-  .hero__title { font-size: 44px; }
+  .hero__title { font-size: 38px; text-align: center; }
+  .hero__eyebrow { align-self: center; }
+  .hero__lead { text-align: center; max-width: none; }
+  .hero__ctas { justify-content: center; }
+  .hero__trust { justify-content: center; }
   .h2 { font-size: 32px; }
   .hero__ctas { flex-direction: column; align-items: stretch; }
   .btn { justify-content: center; }
   .sobre__creds { grid-template-columns: 1fr; }
+  .hero__visual { max-width: 240px; }
 }
