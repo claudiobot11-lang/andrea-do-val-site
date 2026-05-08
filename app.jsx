@@ -114,8 +114,8 @@ function App() {
             </div>
             <div className="hero__trust">
               <div className="hero__trust-item">
-                <strong>15+</strong>
-                <span>anos de prática clínica</span>
+                <strong>Longa</strong>
+                <span>experiência em prática clínica</span>
               </div>
               <div className="hero__trust-divider"></div>
               <div className="hero__trust-item">
@@ -179,7 +179,7 @@ function App() {
             </h2>
             <div className="sobre__body">
               <p>
-                Sou Andrea do Val, psicóloga clínica formada com mais de 15 anos de experiência
+                Sou Andrea do Val, psicóloga clínica com longa experiência
                 em atendimento a adultos e idosos. Trabalho a partir de uma escuta cuidadosa,
                 ética e construída em parceria — sem fórmulas prontas.
               </p>
