@@ -64,7 +64,7 @@ function App() {
       <nav className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
         <div className="nav__inner">
           <button className="nav__brand" onClick={() => scrollTo("hero")} aria-label="Andrea do Val — Psicóloga">
-            <img src="logo-andrea.png" alt="Andrea do Val" className="nav__brand-logo" />
+            <img src="logo-andrea.png" alt="Andrea do Val" className="nav__brand-logo" loading="lazy" />
           </button>
           <div className="nav__links">
             <button onClick={() => scrollTo("sobre")}>Sobre</button>
@@ -128,7 +128,11 @@ function App() {
           <div className="hero__visual">
             <div className="hero__photo">
               <div className="hero__photo-inner">
-                <img src="andrea-foto.png" alt="Andrea do Val, psicóloga, sorrindo" className="hero__photo-img" />
+                <picture>
+                  <source srcSet="andrea-foto.webp" type="image/webp" />
+                  <source srcSet="andrea-foto.avif" type="image/avif" />
+                  <img src="andrea-foto.png" alt="Andrea do Val, psicóloga, sorrindo" className="hero__photo-img" fetchPriority="high" />
+                </picture>
               </div>
               <div className="hero__photo-logo">
                 <img src="logo-andrea.png" alt="Andrea do Val · Psicóloga · CRP-SP 06/303379" />
