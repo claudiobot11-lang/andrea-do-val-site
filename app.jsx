@@ -1,5 +1,5 @@
-/* global React, ReactDOM, useTweaks, TweaksPanel, TweakSection, TweakColor, TweakRadio, TweakSelect, TweakToggle */
-const { useState, useEffect, useRef } = React;
+import React, { useState, useEffect, useRef } from 'react';
+import { useTweaks, TweaksPanel, TweakSection, TweakColor, TweakRadio, TweakSelect, TweakToggle, TweakText } from './tweaks-panel.jsx';
 
 const DEFAULTS = /*EDITMODE-BEGIN*/{
   "palette": ["#3d4a3d", "#d8cfc0", "#f5f1ea"],
@@ -539,4 +539,4 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+export default App;

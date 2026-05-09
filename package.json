@@ -3,12 +3,20 @@
   "version": "1.0.0",
   "description": "Site Andrea do Val - Psicóloga",
   "scripts": {
-    "start": "serve . -l ${PORT:-3000} --no-clipboard"
+    "dev": "vite",
+    "build": "vite build",
+    "start": "serve dist -l ${PORT:-3000} --no-clipboard"
   },
   "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "serve": "^14.2.3"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "vite": "^8.0.11"
   }
 }
